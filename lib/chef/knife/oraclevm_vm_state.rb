@@ -1,5 +1,5 @@
 #
-# Author:: Ezra Pagel (<ezra@cpan.org>)
+# Author:: Geoff O'Callaghan (<geoffocallaghan@gmail.com>)
 # License:: Apache License, Version 2.0
 #
 
