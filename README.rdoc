@@ -1,0 +1,56 @@
+= Knife OracleVM
+
+= DESCRIPTION:
+
+This is an Opscode Knife plugin to interact with Oracle's OracleVM. This plugin currently supports the following:
+Listings:
+-VMs
+VM Operations:
+- Change Power state  on/off/suspend/resume/reset
+
+= INSTALLATION:
+
+    gem install knife-oraclevm
+
+= CONFIGURATION:
+
+This plugin only communicates with the OracleVM Manager via the documented CLI. Only named user authentication via SSH keys is supported.  You can add the credentials to your <tt>knife.rb</tt> file:
+
+    knife[:ovmmgr_host] = "oraclevmmgr-hostname"
+    knife[:ovmmgr_user] = "privileged username"        # defaults to admin
+    knife[:ovmmgr_pass] = "your password"
+
+Credentials can also be specified on the command line for multiple oraclevm manager servers
+
+= SUBCOMMANDS:
+
+This plugin provides the following Knife subcommands.  Specific command options can be found by invoking the subcommand with a <tt>--help</tt> flag
+
+== knife oraclevm vm state <vmname> <options>
+
+    <vmname> is the name of the virtual machine you wish to display or alter the power state on.
+    -s,  --state <on|off|suspend|resume|reset>   Alter the power state of the virtual machine to the state specified    
+    
+    If -s,  --state is not specified the current power state is displayed
+
+= LICENSE:
+
+Authors:: Geoff O'Callaghan <geoffocallaghan@gmail.com>
+
+Copyright:: Copyright (c) 2013 Geoff O'Callaghan
+
+Oracle is a trademarks of Oracle, Inc.
+
+License:: Apache License, Version 2.0
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
