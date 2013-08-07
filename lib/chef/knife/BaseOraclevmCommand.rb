@@ -269,6 +269,32 @@ class Chef
                            end
                            return current
                         end
+#
+#                       list_vm, display all vm's
+#
+			def list_vm
+                           current = {:errormsg => "", :status => "", :time => "", :vmstatus => ""}
+
+                           conn_opts=get_cli_connection
+                           Chef::Log.debug("#{conn_opts[:host]}...list vm")
+                           Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                              output = ssh.exec!("list vm")
+                              output.each_line do |line|
+                                 if line.match(/Status:/)
+                                    current[:status]=line.split[1].strip
+                                 elsif line.match(/Time:/)
+                                    line["Time: "]=""
+                                    current[:time]=line.strip
+                                 elsif line.match(/ id:/)
+                                    puts line.split(':')[2].strip
+                                 elsif line.match(/Error Msg:/)
+                                    line["Error Msg: "]=""
+                                    current[:errormsg]=line.strip
+                                 end
+                              end
+                           end
+                           return current
+                        end
 			
 		end
 	end
