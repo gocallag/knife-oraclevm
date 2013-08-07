@@ -75,6 +75,21 @@ class Chef::Knife::OraclevmVmState < Chef::Knife::BaseOraclevmCommand
            else
                  show_usage
            end
+        when 'Stopping'
+           case state
+           when 'on'
+                 puts "Cannot power on virtual machine #{vmname} as it is Stopping"
+           when 'off'
+                 puts "Cannot power off virtual machine #{vmname} as it is Stopping"
+           when 'suspend'
+                 puts "Cannot Suspend virtual machine #{vmname} as it is Stopping"
+           when 'restart'
+                 puts "Cannot Restrt virtual machine #{vmname} as it is Stopping"
+           when 'resume'
+                 puts "Cannot Resume virtual machine #{vmname} as it is Stopping"
+           else
+                 show_usage
+           end
         when 'Suspended'
            case state
            when 'on'
@@ -92,7 +107,7 @@ class Chef::Knife::OraclevmVmState < Chef::Knife::BaseOraclevmCommand
                  show_usage
            end
         else
-            puts "I don't know what a state of  #{state} is on #{vmname}"
+            puts "I don't know what a state of  #{current[:vmstatus]} is on #{vmname}"
         end
         end
     else
