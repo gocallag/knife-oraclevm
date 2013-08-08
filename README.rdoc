@@ -28,11 +28,18 @@ This plugin provides the following Knife subcommands.  Specific command options 
 
 == knife oraclevm vm state <vmname> <options>
 
+    Change the operational state of a VM
+
     <vmname> is the name of the virtual machine you wish to display or alter the power state on.
     -s,  --state <on|off|suspend|resume|reset>   Alter the power state of the virtual machine to the state specified    
     
     If -s,  --state is not specified the current power state is displayed
 
+== knife oraclevm vm list
+
+    List VM's 
+
+= LICENSE:
 = LICENSE:
 
 Authors:: Geoff O'Callaghan <geoffocallaghan@gmail.com>
