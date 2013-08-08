@@ -39,7 +39,12 @@ This plugin provides the following Knife subcommands.  Specific command options 
 
     List VM's 
 
-= LICENSE:
+== knife oraclevm vm delete <vmname> 
+
+    Delete the specified VM
+
+    <vmname> is the name of the virtual machine you wish to delete
+
 = LICENSE:
 
 Authors:: Geoff O'Callaghan <geoffocallaghan@gmail.com>
