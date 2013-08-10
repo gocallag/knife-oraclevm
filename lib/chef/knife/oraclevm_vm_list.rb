@@ -21,7 +21,12 @@ class Chef::Knife::OraclevmVmList < Chef::Knife::BaseOraclevmCommand
 
     vmname = @name_args[0]
 
-    list_vm(vmname)
+    current=list_vm(vmname)
+    Chef::Log.debug("Status = #{current[:status]}.  Time = #{current[:time]}. VM Status = #{current[:vmstatus]}.")
+
+    if current[:status]!="Success"
+      puts "Call to OVM CLI Failed with #{current[:errormsg]}"
+    end
 
   end
 end
