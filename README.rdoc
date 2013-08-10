@@ -35,9 +35,9 @@ This plugin provides the following Knife subcommands.  Specific command options 
     
     If -s,  --state is not specified the current power state is displayed
 
-== knife oraclevm vm list
+== knife oraclevm vm list <vmname>
 
-    List VM's 
+    List VM's or if <vmname> specified list the details of that specific vm
 
 == knife oraclevm vm delete <vmname> 
 
