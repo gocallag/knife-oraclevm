@@ -41,6 +41,10 @@ This plugin provides the following Knife subcommands.  Specific command options 
 
     <vmname> is the name of the virtual machine you wish to delete
 
+== knife oraclevm serverpool list <poolname>
+
+    List Serverpool's or if <poolname> specified list the details of that specific serverpool
+
 = LICENSE:
 
 Authors:: Geoff O'Callaghan <geoffocallaghan@gmail.com>

@@ -317,6 +317,53 @@ class Chef
                            end
                         end
 #
+#                       list_serverpool, display all server pool's
+#
+			def list_serverpool(pool)
+                           current = {:errormsg => "", :status => "", :time => "", :poolstatus => ""}
+
+                           conn_opts=get_cli_connection
+                           if not  pool
+                              Chef::Log.debug("#{conn_opts[:host]}...list serverpool")
+                              Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                                 output = ssh.exec!("list serverpool")
+                                 output.each_line do |line|
+                                    if line.match(/Status:/)
+                                       current[:status]=line.split[1].strip
+                                    elsif line.match(/Time:/)
+                                       line["Time: "]=""
+                                       current[:time]=line.strip
+                                    elsif line.match(/ id:/)
+                                       puts line.split(':')[2].strip
+                                    elsif line.match(/Error Msg:/)
+                                       line["Error Msg: "]=""
+                                       current[:errormsg]=line.strip
+                                    end
+                                 end
+                              end
+                              return current
+                           else
+                              Chef::Log.debug("#{conn_opts[:host]}...show serverpool name=#{pool}")
+                              Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                                 output = ssh.exec!("show serverpool name=#{pool}")
+                                 output.each_line do |line|
+                                    if line.match(/Status:/)
+                                       current[:status]=line.split[1].strip
+                                    elsif line.match(/Time:/)
+                                       line["Time: "]=""
+                                       current[:time]=line.strip
+                                    elsif line.match(/Error Msg:/)
+                                       line["Error Msg: "]=""
+                                       current[:errormsg]=line.strip
+                                    elsif line.match(/  /)
+                                       puts line
+                                    end
+                                 end
+                              end
+                              return current
+                           end
+                        end
+#
 #                       delete_vm, delete VM
 #
 			def delete_vm(vmname)
