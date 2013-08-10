@@ -11,7 +11,7 @@ require 'net/ssh'
 # Manage power state of a virtual machine
 class Chef::Knife::OraclevmVmList < Chef::Knife::BaseOraclevmCommand
 
-  banner "knife oraclevm vm list (options)"
+  banner "knife oraclevm vm list <name>"
 
   get_common_options
 
@@ -21,7 +21,7 @@ class Chef::Knife::OraclevmVmList < Chef::Knife::BaseOraclevmCommand
 
     vmname = @name_args[0]
 
-    list_vm
+    list_vm(vmname)
 
   end
 end
