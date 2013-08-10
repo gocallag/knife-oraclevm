@@ -2,11 +2,7 @@
 
 = DESCRIPTION:
 
-This is an Opscode Knife plugin to interact with Oracle's OracleVM. This plugin currently supports the following:
-Listings:
--VMs
-VM Operations:
-- Change Power state  on/off/suspend/resume/reset
+This is an Opscode Knife plugin to interact with Oracle's OracleVM. 
 
 = INSTALLATION:
 
