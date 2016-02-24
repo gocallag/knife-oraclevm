@@ -49,7 +49,7 @@ This plugin provides the following Knife subcommands.  Specific command options 
     
 	Clone a VM or a template
     
-	-n, --destname VALUE    The name of the cloned virtual machine or template.
+    -n, --destname VALUE    The name of the cloned virtual machine or template.
     -t, --desttype VALUE    The object to create from the virtual machine can be a virtual machine or a template.
     -p, --serverpool VALUE  The server pool on which to deploy the cloned virtual machine or template.
      
@@ -57,7 +57,7 @@ This plugin provides the following Knife subcommands.  Specific command options 
     
 	Edit cpu and memory of a VM 
     
-	-c, --cpucount VALUE       The number of processors the virtual machine is allocated.
+    -c, --cpucount VALUE       The number of processors the virtual machine is allocated.
     -x, --cpucountlimit VALUE  The maximum number of processors the virtual machine can be allocated.
     -m, --memory VALUE         The memory size the virtual machine is allocated in MB.
     -l, --memoryLimit VALUE    The maximum memory size the virtual machine can be allocated in MB.
@@ -68,14 +68,14 @@ This plugin provides the following Knife subcommands.  Specific command options 
     
 	Add a network to a VM
     
-	-n, --network VALUE       The name of the network.
+    -n, --network VALUE       The name of the network.
     -s, --vnicname VALUE      The name of the vnic.
      
 == knife oraclevm vm message <vmname> <options>
     
 	Send VM messages to a VM
-    
-	-k, --key VALUE          The name of the key.
+
+    -k, --key VALUE          The name of the key.
     -m, --message VALUE      The value of the message.
      
 == knife oraclevm tag list <tag>
