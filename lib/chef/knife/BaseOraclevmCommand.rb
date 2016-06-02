@@ -387,7 +387,150 @@ class Chef
                            end
                            return current
                         end
-			
+						
+#
+#                       clone_vm, clone VM
+#
+			def clone_vm(vmname, desttype, destname, serverpool)
+                           current = {:errormsg => "", :status => "", :time => "", :vmstatus => ""}
+						   
+                           conn_opts=get_cli_connection
+                           Chef::Log.debug("#{conn_opts[:host]}...clone vm name=#{vmname},#{desttype},#{destname},#{serverpool}")
+                           Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                              output = ssh.exec!("clone vm name=#{vmname} destType=#{desttype} destname=#{destname} serverPool=#{serverpool}")
+                              output.each_line do |line|
+                                 if line.match(/Status:/)
+                                    current[:status]=line.split[1].strip
+                                 elsif line.match(/Time:/)
+                                    line["Time: "]=""
+                                    current[:time]=line.strip
+                                 elsif line.match(/Error Msg:/)
+                                    line["Error Msg: "]=""
+                                    current[:errormsg]=line.strip
+                                 end
+                              end
+                           end
+                           return current
+                        end
+#
+#                       edit_vm, edit VM cpu and memory
+#
+			def edit_vm(vmname, memory, memorylimit, cpucount, cpucountlimit)
+                           current = {:errormsg => "", :status => "", :time => "", :vmstatus => ""}
+						   
+                           conn_opts=get_cli_connection
+                           Chef::Log.debug("#{conn_opts[:host]}...edit vm name=#{vmname},#{memory},#{memorylimit},#{cpucount},#{cpucountlimit}")
+                           Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                              output = ssh.exec!("edit vm name=#{vmname} memory=#{memory} memorylimit=#{memorylimit} cpucount=#{cpucount} cpucountlimit=#{cpucountlimit}")
+                              output.each_line do |line|
+                                 if line.match(/Status:/)
+                                    current[:status]=line.split[1].strip
+                                 elsif line.match(/Time:/)
+                                    line["Time: "]=""
+                                    current[:time]=line.strip
+                                 elsif line.match(/Error Msg:/)
+                                    line["Error Msg: "]=""
+                                    current[:errormsg]=line.strip
+                                 end
+                              end
+                           end
+                           return current
+                        end						
+#
+#                       add_vnic, add vnic on vm 
+#
+			def add_vnic(vmname, network, vnicname)
+                           current = {:errormsg => "", :status => "", :time => "", :vmstatus => ""}
+						   
+                           conn_opts=get_cli_connection
+                           Chef::Log.debug("#{conn_opts[:host]}...create vnic name=#{vnicname},#{network},#{vmname}")
+                           Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                              output = ssh.exec!("create vnic name=#{vnicname} network=#{network} on vm name=#{vmname}")
+                              output.each_line do |line|
+                                 if line.match(/Status:/)
+                                    current[:status]=line.split[1].strip
+                                 elsif line.match(/Time:/)
+                                    line["Time: "]=""
+                                    current[:time]=line.strip
+                                 elsif line.match(/Error Msg:/)
+                                    line["Error Msg: "]=""
+                                    current[:errormsg]=line.strip
+                                 end
+                              end
+                           end
+                           return current
+                        end					
+#
+#                       send_message, send a vm message to a vm
+#
+			def send_message(vmname, key, message)
+                           current = {:errormsg => "", :status => "", :time => "", :vmstatus => ""}
+						   
+                           conn_opts=get_cli_connection
+                           Chef::Log.debug("#{conn_opts[:host]}...sendvmmessage vm  name=#{vmname},#{key},#{message}")
+                           Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                              output = ssh.exec!("sendvmmessage vm name=#{vmname} key=#{key} message=#{message} log=no")
+                              output.each_line do |line|
+                                 if line.match(/Status:/)
+                                    current[:status]=line.split[1].strip
+                                 elsif line.match(/Time:/)
+                                    line["Time: "]=""
+                                    current[:time]=line.strip
+                                 elsif line.match(/Error Msg:/)
+                                    line["Error Msg: "]=""
+                                    current[:errormsg]=line.strip
+                                 end
+                              end
+                           end
+                           return current
+                        end
+#
+#                       List TAG
+#
+			def list_tag(tag)
+                           current = {:errormsg => "", :status => "", :time => "", :vmstatus => ""}
+
+                           conn_opts=get_cli_connection
+                           if not tag 
+                              Chef::Log.debug("#{conn_opts[:host]}...list vm")
+                              Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                                 output = ssh.exec!("list tag")
+                                 output.each_line do |line|
+                                    if line.match(/Status:/)
+                                       current[:status]=line.split[1].strip
+                                    elsif line.match(/Time:/)
+                                       line["Time: "]=""
+                                       current[:time]=line.strip
+                                    elsif line.match(/ id:/)
+                                       puts line.split(':')[2].strip
+                                    elsif line.match(/Error Msg:/)
+                                       line["Error Msg: "]=""
+                                       current[:errormsg]=line.strip
+                                    end
+                                 end
+                              end
+                              return current
+                           else
+                              Chef::Log.debug("#{conn_opts[:host]}...show vm name=#{tag}")
+                              Net::SSH.start( conn_opts[:host], conn_opts[:user], :password => conn_opts[:password], :port => conn_opts[:port] ) do|ssh|
+                                 output = ssh.exec!("show tag name='#{tag}'")
+                                 output.each_line do |line|
+                                    if line.match(/Status:/)
+                                       current[:status]=line.split[1].strip
+                                    elsif line.match(/Time:/)
+                                       line["Time: "]=""
+                                       current[:time]=line.strip
+                                    elsif line.match(/Error Msg:/)
+                                       line["Error Msg: "]=""
+                                       current[:errormsg]=line.strip
+                                    elsif line.match(/  /)
+                                       puts line
+                                    end
+                                 end
+                              end
+                              return current
+                           end
+                        end						
 		end
 	end
 end
